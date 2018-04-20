@@ -1,34 +1,31 @@
-const mongoose = require('mongoose');
+const express = require('express');
+const bodyParser = require('body-parser');
+const {mongoose} = require('./db/mongoose');
+const {Todo} = require('./models/todo');
+const {User} = require('./models/user');
 
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost:27017/TodoApp',(err,db)=>{
-    if(err){
-        return console.log('Unable to connect',err);
-    }
-    console.log('Successfully Connected to MongoDB server');
+var app = express();
+
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json());
+
+app.post('/todos',(req,res,next)=>{
+   var todo = new Todo({text:req.body.text});
+   todo.save().then((doc)=>{
+      res.send(doc);
+   },(e)=>{
+       if(e){
+           res.status(400).send(e);
+       }
+   })
+});
+
+const Port = 3000;
+app.listen(Port,()=>{
+   console.log('App started at Port: '+Port);
 })
 
-//Create Todo Model
-var Todo = mongoose.model('Todos',{
-     text:{
-        type:String
-     },
-     completed:{
-       type:Boolean
-     },
-     completedAt:{
-       type:Number
-     }
-})
 
-//Create A new instance of todo model
 
-var newTodo = new Todo({text:"My 2nd To do",completed:true,completedAt:11.41});
 
-newTodo.save().then((docs)=>{
-  console.log(JSON.stringify(docs));
-},(e)=>{
-    if(e){
-        return console.log('Unable to save todo',err);
-    }
-})
+
