@@ -19,13 +19,13 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err,db) =>{
 
 
     //DELETE ONE
-    db.collection('Todos').deleteOne({text:'same to do'}).then((result)=>{
-        console.log(result);
-    },(err)=>{
-        if(err){
-            console.log('unable to delete',err);
-        }
-    })
+    // db.collection('Todos').deleteOne({text:'same to do'}).then((result)=>{
+    //     console.log(result);
+    // },(err)=>{
+    //     if(err){
+    //         console.log('unable to delete',err);
+    //     }
+    // })
 
 
     //Find ONE And DELETE
