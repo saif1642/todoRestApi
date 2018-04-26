@@ -20,11 +20,21 @@ app.post('/todos',(req,res,next)=>{
    })
 });
 
+//GET all Todos
+app.get('/todos',(req,res) => {
+   Todo.find().then((todos)=>{
+       res.send(todos);
+   },(e)=>{
+       res.status(400).send(e);
+   })
+})
+
 const Port = 3000;
 app.listen(Port,()=>{
    console.log('App started at Port: '+Port);
 })
 
+module.exports = {app};
 
 
 
