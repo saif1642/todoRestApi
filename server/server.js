@@ -57,7 +57,7 @@ app.get('/todos/:id',(req,res)=>{
 // })
 
 app.listen(process.env.PORT || 3000, ()=>{
-    console.log('listening on', app.address().port);
+    console.log('listening on', port);
   });
 
 module.exports = {app};
