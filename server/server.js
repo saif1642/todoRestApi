@@ -11,7 +11,7 @@ var app = express();
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 
-
+const Port = process.env.PORT||3000;
 
 app.post('/todos',(req,res,next)=>{
    var todo = new Todo({text:req.body.text});
@@ -52,9 +52,9 @@ app.get('/todos/:id',(req,res)=>{
 
 
 
-// app.listen(Port,()=>{
-//    console.log('App started at Port: '+Port);
-// })
+app.listen(Port,()=>{
+   console.log('App started at Port: '+Port);
+})
 
 // app.listen(process.env.PORT || 3000, ()=>{
 //     console.log('listening on', port);
