@@ -56,9 +56,9 @@ app.get('/todos/:id',(req,res)=>{
 //    console.log('App started at Port: '+Port);
 // })
 
-app.listen(process.env.PORT || 3000, ()=>{
-    console.log('listening on', port);
-  });
+// app.listen(process.env.PORT || 3000, ()=>{
+//     console.log('listening on', port);
+//   });
 
 module.exports = {app};
 
