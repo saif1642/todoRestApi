@@ -13,6 +13,11 @@ app.use(bodyParser.json());
 
 const Port = process.env.PORT||3000;
 
+
+app.get('/',(req,res,next)=>{
+    res.send('Hello World');
+});
+
 app.post('/todos',(req,res,next)=>{
    var todo = new Todo({text:req.body.text});
    todo.save().then((doc)=>{
@@ -31,7 +36,7 @@ app.get('/todos',(req,res) => {
    },(e)=>{
        res.status(400).send(e);
    })
-})
+});
 
 //Get Individual Todo
 app.get('/todos/:id',(req,res)=>{
@@ -45,16 +50,36 @@ app.get('/todos/:id',(req,res)=>{
          }else{
              res.status(404).send();
          }
-    },(e)=>{
+    }).catch((e)=>{
         res.status(400).send();
-    })
-})
+    });
+});
+
+//DELETE A TODO BY ID
+app.delete('/todos/:id',(req,res)=>{
+    //get the id
+    var id = req.params.id;
+    //validate the id
+    if(!ObjectID.isValid(id)){
+        res.status(404).send();
+    }
+
+    //delete the todo
+    Todo.findByIdAndRemove(id).then((todo)=>{
+        if(!todo){
+            res.status(404).send();    
+        }
+        res.send(todo);
+   }).catch((e)=>{
+    res.status(400).send();
+   });
+});
 
 
 
 app.listen(Port,()=>{
    console.log('App started at Port: '+Port);
-})
+});
 
 // app.listen(process.env.PORT || 3000, ()=>{
 //     console.log('listening on', port);
